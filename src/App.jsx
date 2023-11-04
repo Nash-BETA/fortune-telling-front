@@ -1,8 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from './components/home';
-import About from './components/about';
-import Contact from './components/contact';
+
+// routes
+import ROUTES from './routes';
+
+import Home from './containers/Home';
+import FortuneTellerDetail from './containers/FortuneTellerDetail';
+
 
 export default function App() {
     return (
@@ -11,9 +15,17 @@ export default function App() {
                 <div className="App">
                     <h1>Hello React Router v6</h1>
                     <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/about" element={<About />} />
-                        <Route path="/contact" element={<Contact />} />
+                        <Route path={ROUTES.home} element={<Home />} />
+                        <Route path={ROUTES.fortuneTellerDetail}
+                               render={({ match }) => {
+                                   const fortuneTellerId = Number(match.params.fortune_teller_id);
+                                   return (
+                                       <FortuneTellerDetail
+                                           fortuneTellerId={fortuneTellerId}
+                                       />
+                                   );
+                               }}
+                        />
                     </Routes>
                 </div>
             </BrowserRouter>
